@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    Rigidbody rb;
+    private float thrust = 1000f;
+    private float rotate = 100f;
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
     void Update()
     {
         HandleThrust();
@@ -14,7 +21,7 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            Debug.Log("Thrust -  Space Clicked");
+            rb.AddRelativeForce(thrust * Time.deltaTime * Vector3.up);
         }
     }
 
@@ -22,11 +29,11 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("Turn Left");
+            transform.Rotate(rotate * Time.deltaTime * Vector3.forward);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            Debug.Log("Turn Right");
-        }
+            transform.Rotate(rotate * Time.deltaTime * -Vector3.forward);
+         }
     }
 }
