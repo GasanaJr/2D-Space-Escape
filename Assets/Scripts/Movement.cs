@@ -7,9 +7,13 @@ public class Movement : MonoBehaviour
     Rigidbody rb;
     private float thrust = 1000f;
     private float rotate = 100f;
+    private AudioSource thrustAudio;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        thrustAudio = GetComponent<AudioSource>();
+        thrustAudio.playOnAwake = false;
+        thrustAudio.loop = true;
     }
     void Update()
     {
@@ -22,7 +26,15 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             rb.AddRelativeForce(thrust * Time.deltaTime * Vector3.up);
+            if (!thrustAudio.isPlaying)
+            {
+                thrustAudio.Play();
+            }
+        } else
+        {
+            thrustAudio.Stop();
         }
+
     }
 
     void HandleRotation()
